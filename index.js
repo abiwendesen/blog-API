@@ -11,8 +11,13 @@ import cookieParser from "cookie-parser";
 const app = express();
 
 
-let accessLogStream = fs.createWriteStream(path.join(__dirname,'access.log'),{ flags: 'a'})
-app.use(morgan("combined",{stream: accessLogStream}));
+// Define __dirname for ES modules
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+let accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
+app.use(morgan("combined", { stream: accessLogStream }));
 app.use(express.json());
 app.use(cookieParser());
 
